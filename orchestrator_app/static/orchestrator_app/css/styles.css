@@ -1,0 +1,56 @@
+html, body {
+    height: 100%; /* Ensure HTML and body take up full height of viewport */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+h1 {
+    padding: 10px;
+}
+
+.container {
+    display: flex; /* Set container as a Flexbox */
+    min-height: 100vh; /* Set minimum height of container to 100% of viewport height */
+}
+
+.left-menu {
+    flex: 0 0 15%; /* Width of left column as 20% */
+    background-color: #DDEEBB;
+    padding: 10px;
+}
+
+.main-view {
+    flex: 1; /* Width of main view as remaining 80% */
+    background-color: #EEEBBB;
+    padding: 10px;
+}
+
+
+.button-link {
+    font-size: 30px;
+}
+
+.menu-list li {
+    padding-bottom: 15px;
+}
+
+.processes-table th {
+    padding-bottom: 25px;
+    font-size: 30px
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #000000;
+    padding: 10px;
+    text-align: left;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}

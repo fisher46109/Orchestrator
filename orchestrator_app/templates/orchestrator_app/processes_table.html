@@ -1,0 +1,67 @@
+{% extends 'orchestrator_app/base.html' %}
+
+{% block content%}
+<div class="processes-table">
+
+    <form action="{% url 'new-process' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">ADD NEW PROCESS</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Process name</th>
+                <th>Machine</th>
+                <th>User</th>
+                <th>Robot</th>
+                <th>State</th>
+                <th>Result</th>
+                <th>Activate</th>
+                <th>Deactivate</th>
+                <th>Edit</th>
+                <th>Remove</th>
+            </tr>
+        <tbody>
+            {% for process in processes %}
+            <tr>
+                <td>{{ process.process_name }}</td>
+                <td>{{ process.machine }}</td>
+                <td>{{ process.user }}</td>
+                <td>{{ process.robot }}</td>
+                <td>{{ process.state }}</td>
+                <td>{{ process.result }}</td>
+                <td>
+                    <form action="{% url 'start-process' process.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">START</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'stop-process' process.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">STOP</button>
+                    </form>
+                    <form action="{% url 'kill-process' process.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">KILL</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'edit-process' process.id %}" method="get">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">EDIT</button>
+                    </form>
+                </td>
+                 <td>
+                    <form action="{% url 'remove-process' process.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">REMOVE</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

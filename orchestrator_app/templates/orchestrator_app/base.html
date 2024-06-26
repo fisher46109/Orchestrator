@@ -1,0 +1,36 @@
+{% load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+     <h1>Orchestrator</h1>
+
+    <div class="container">
+        <div class="left-menu">
+            <ul class="menu-list">
+                <li><a href="{% url 'home-view' %}" class="button-link">Processes</a></li>
+                <li><a href="{% url 'machines-view' %}" class="button-link">Machines</a></li>
+                <li><a href="{% url 'users-view' %}" class="button-link">Users</a></li>
+                <li><a href="{% url 'robots-view' %}" class="button-link">Robots</a></li>
+                <li><a href="{% url 'scheduler-view' %}" class="button-link">Scheduler</a></li>
+            </ul>
+        </div>
+
+        <div class="main-view">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

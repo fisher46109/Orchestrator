@@ -1,0 +1,42 @@
+{% extends 'orchestrator_app/base.html' %}
+
+{% block content%}
+    <br>
+    <form action="{% url 'new-machine' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">ADD NEW MACHINE</button>
+    </form>
+    <br>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Edit</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for machine in machines %}
+            <tr>
+                <td>{{ machine.id }}</td>
+                <td>{{ machine.machine_name }}</td>
+                <td><form action="{% url 'edit-machine' machine.id %}" method="get">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">EDIT</button>
+                    </form>
+                </td>
+                <td><form action="{% url 'remove-machine' machine.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">REMOVE</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

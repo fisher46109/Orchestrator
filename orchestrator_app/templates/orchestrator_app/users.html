@@ -1,0 +1,42 @@
+{% extends 'orchestrator_app/base.html' %}
+
+{% block content%}
+    <br>
+    <form action="{% url 'new-user' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">ADD NEW USER</button>
+    </form>
+    <br>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Edit</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.user_name }}</td>
+                <td><form action="{% url 'edit-user' user.id %}" method="get">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">EDIT</button>
+                    </form>
+                </td>
+                <td><form action="{% url 'remove-user' user.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">REMOVE</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
