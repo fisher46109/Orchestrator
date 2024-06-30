@@ -17,7 +17,7 @@ class User(models.Model):
 
 class Robot(models.Model):
     robot_name = models.CharField(max_length=100, unique=True)
-    # Robot file
+    zip_file = models.FileField(upload_to='zip_files', null=True, blank=True)
 
     def __str__(self):
         return self.robot_name

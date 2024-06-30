@@ -19,6 +19,7 @@
                 <th>Result</th>
                 <th>Activate</th>
                 <th>Deactivate</th>
+                <th>Update bot</th>
                 <th>Edit</th>
                 <th>Remove</th>
             </tr>
@@ -45,6 +46,12 @@
                     <form action="{% url 'kill-process' process.id %}" method="post" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-primary">KILL</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'update-process-bot' process.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">UPDATE BOT</button>
                     </form>
                 </td>
                 <td>

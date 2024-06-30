@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
@@ -146,7 +147,7 @@ def robots_view(request):
 
 def new_robot(request):
     if request.method == "POST":
-        form = RobotForm(request.POST)
+        form = RobotForm(request.POST, request.FILES)
         if form.is_valid():
             robot = form.save(commit=False)
             robot.robot_name = form.cleaned_data['robot_name']
@@ -157,17 +158,11 @@ def new_robot(request):
     return render(request, 'orchestrator_app/robot_edit.html', {'form': form})
 
 
-def remove_robot(request, robot_id):
-    robot = get_object_or_404(Robot, pk=robot_id)
-    robot.delete()
-    return redirect('robots-view')
-
-
 def edit_robot(request, robot_id):
     robot = get_object_or_404(Robot, pk=robot_id)
 
     if request.method == "POST":
-        form = RobotForm(request.POST, instance=robot)
+        form = RobotForm(request.POST, request.FILES, instance=robot)
         if form.is_valid():
             form.save()
             return redirect('robots-view')
@@ -175,6 +170,30 @@ def edit_robot(request, robot_id):
         form = RobotForm(instance=robot)
 
     return render(request, 'orchestrator_app/robot_edit.html', {'form': form})
+
+
+def remove_robot(request, robot_id):
+    robot = get_object_or_404(Robot, pk=robot_id)
+    robot.delete()
+    return redirect('robots-view')
+
+
+def send_robot_to_agent(request, robot_name):
+    robot = get_object_or_404(Robot, robot_name=robot_name)
+
+    if not robot.zip_file:
+        return HttpResponse("Robot file not found.", status=404)
+
+    try:
+        with robot.zip_file.open() as file:
+            # response as content of file
+            response = HttpResponse(file.read(), content_type='application/zip')
+            # "attachment" informs to download (not show) the file, filename hint file name
+            response['Content-Disposition'] = f'attachment; filename="{robot.zip_file.name}"'
+            return response
+    except Exception as e:
+        return HttpResponse(f"Error while downloading file: {str(e)}", status=500)
+
 
 def scheduler_view(request):
     return render(request, 'orchestrator_app/scheduler.html')
@@ -210,7 +229,6 @@ def edit_process(request, process_id):
     return render(request, 'orchestrator_app/process_edit.html', {'form': form})
 
 
-
 def remove_process(request, process_id):
     process = get_object_or_404(Process, pk=process_id)
     process.delete()
@@ -240,3 +258,10 @@ def kill_process(request, process_id):
         process.save()
         return redirect('home-view')
 
+
+def update_process_bot(request, process_id):
+    if request.method == "POST":
+        process = get_object_or_404(Process, pk=process_id)
+        process.robot_update_flag = "UPDATE"
+        process.save()
+        return redirect('home-view')

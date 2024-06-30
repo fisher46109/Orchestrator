@@ -13,6 +13,7 @@ urlpatterns = [
     path('start_process/<int:process_id>/', views.start_process, name='start-process'),
     path('stop_process/<int:process_id>/', views.stop_process, name='stop-process'),
     path('kill_process/<int:process_id>/', views.kill_process, name='kill-process'),
+    path('update_process_bot/<int:process_id>/', views.update_process_bot, name='update-process-bot'),
     path('edit_process/<int:process_id>', views.edit_process, name='edit-process'),
     path('remove_process/<int:process_id>', views.remove_process, name='remove-process'),
 
@@ -31,6 +32,7 @@ urlpatterns = [
     path('new_robot', views.new_robot, name='new-robot'),
     path('remove_robot/<int:robot_id>', views.remove_robot, name='remove-robot'),
     path('edit_robot/<int:robot_id>', views.edit_robot, name='edit-robot'),
+    path('send_robot_to_agent/<str:robot_name>', views.send_robot_to_agent, name='send-robot-to-agent'),
 
     path('scheduler_view/', views.scheduler_view, name='scheduler-view'),
 
