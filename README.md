@@ -13,6 +13,7 @@ pip install -r requirements.txt
 python manage.py migrate
 ```
 **Note!** The sample repository includes a database with example data, so migrations are not necessary. In a production environment, the above migrations should be performed without including the database beforehand.
+
 5. **Run the development server**: Start the local server to test the application.
 ```sh
 python manage.py runserver
